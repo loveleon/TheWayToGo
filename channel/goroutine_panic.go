@@ -8,6 +8,8 @@ func tel(ch chan int) {
 	for i := 0; i < 10; i++ {
 		ch <- i
 	}
+	fmt.Println("before close ch.")
+	close(ch)
 }
 
 func main() {
@@ -15,8 +17,8 @@ func main() {
 	var ok = true
 	go tel(ch)
 	for ok {
-		i := <-ch
-		fmt.Printf("ok is %t and the i is %d\n:", ok, i)
+		if i, ok := <-ch; ok {
+			fmt.Printf("ok is %t and the i is %d\n", ok, i)
+		}
 	}
-
 }
