@@ -8,7 +8,7 @@ func tel(ch chan int) {
 	for i := 0; i < 10; i++ {
 		ch <- i
 	}
-	fmt.Println("before close ch.")
+	//fmt.Println("before close ch.")
 	close(ch)
 }
 
