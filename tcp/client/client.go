@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"net"
-	"time"
 	"bufio"
 	"os"
+	"strings"
 )
 
 //func main() {
@@ -47,5 +47,25 @@ func main(){
 
 	inputReader :=bufio.NewReader(os.Stdin)
 	fmt.Println("what's your(client) name :")
-	inputReader.ReadLine("\n")
+	clientName,_ := inputReader.ReadString('\n')
+	//fmt.Println("client name ",clientName)
+	trimmedClient := strings.Trim(clientName,"\r\n")
+
+	//send to server until quit
+	for {
+		fmt.Println("What send to server ? Q for quit.")
+		input,_ := inputReader.ReadString('\n')
+		trimmedInput := strings.Trim(input,"\r\n")
+		if trimmedInput == "Q" {
+			return
+		}
+		_,err := conn.Write([]byte(trimmedClient+"says:"+trimmedInput))
+		if nil != err {
+			fmt.Println("conn write error.")
+		}
+
+	}
+
+
+
 }
